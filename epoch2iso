@@ -3,9 +3,6 @@
 use Time::Piece;
 use Time::Seconds;
 
-#    s/([0-9]{10})([0-9]{3})/gmtime($1)->datetime.".".$2."Z"/eg
-#s/([0-9]{10})/gmtime($1)->datetime."Z"/eg
-
 if ($h) {
     print "usage: $0\n";
     print "\n";
@@ -35,9 +32,6 @@ if ($h) {
 
 if ($u) {$f=\&gmtime;}
 else {$f=\&localtime;}
-
-
-
 
 $offset=($f->()->tzoffset/3600);
 $tz=($offset==0?"Z":sprintf("%+03d",$offset));
