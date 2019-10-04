@@ -2,7 +2,7 @@
 
 Unix Epoch times are not human readable. This script can be used in a pipeline to convert any likely epoch numbers to the ISO8601 date and time format.
 
-There is no consideration for the meaning of the numbers, so any number in a sensisble range will be converted. This makes it handy for debugging and examining logs, but not suitable for use in a data loading pipeline.
+There is no consideration for the meaning of the numbers, so any number in a sensible range will be converted. This makes it handy for debugging and examining logs, but not suitable for use in a data loading pipeline.
 
 ## Requires
 
@@ -14,10 +14,9 @@ usage: ./epoch2iso
 
 Converts any epoch timestamps found in STDIN to ISO8601 times. Only times within a range of n years from now are converted. Default of 10 years.
 
-Milliseconds are used if a sensible convertion can be made with milliseconds.
+Milliseconds are used if a sensible conversion can be made with milliseconds.
 
 Warning: Some numbers which are not timestamps might be converted accidentally, use -y to limit window range if needed.
-
 
        -h    Print help.
        -q    Quote output with "
@@ -32,4 +31,4 @@ Examples run in 2019 in London (+1 timezone):
          2015-06-17T19:04:50Z
 
          echo 1434567890 | ./epoch2iso -y20
-         2015-06-17T20:04:50Z+1
+         2015-06-17T20:04:50+01
