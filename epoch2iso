@@ -1,0 +1,67 @@
+#!/usr/bin/perl -s
+
+use Time::Piece;
+use Time::Seconds;
+
+#    s/([0-9]{10})([0-9]{3})/gmtime($1)->datetime.".".$2."Z"/eg
+#s/([0-9]{10})/gmtime($1)->datetime."Z"/eg
+
+if ($h) {
+    print "usage: $0\n";
+    print "\n";
+    print "Converts any epoch timestamps found in STDIN to ISO8601 times. Only times within a range of n years from now are converted. Default of 10 years.\n\n";
+    print "Milliseconds are used if a sensible convertion can be made with milliseconds.\n\n";
+    print "Warning: Some numbers which are not timestamps might be converted accidentally, use -y to limit window range if needed.\n\n";
+    print "\n";
+    print "       -h    Print help. \n";
+    print "       -q    Quote output with \" \n";
+    print "       -q=\'  Quote output with ' \n";
+    print "       -u    Print a UTC time' \n";
+    print "       -y    Only convert times within 1 year from now.\n";
+    print "       -y=3  Only convert times within 3 years from now.\n";
+
+    print "\n";
+    print "Examples run in 2019 in London (+1 timezone):\n";
+    print "\n";
+    print "         echo 1434567890 | $0 -y20 -u\n";
+    print "         2015-06-17T19:04:50Z\n";
+    print "\n";
+    print "         echo 1434567890 | $0 -y20 \n";
+    print "         2015-06-17T20:04:50Z+1\n";
+    print "\n";
+    print "\n";
+    exit 0;
+}
+
+if ($u) {$f=\&gmtime;}
+else {$f=\&localtime;}
+
+
+
+
+$offset=($f->()->tzoffset/3600);
+$tz=($offset==0?"Z":sprintf("%+03d",$offset));
+
+if ($y) {}
+else {$y=10;}
+
+if ($q==1) {$q='"'}
+
+sub epoch_date_time
+{
+    $diff_to_now= (gmtime() - $f->($1))->years;
+    if (abs($diff_to_now) < $y) {
+        $q.$f->($1)->datetime.($2?".".$2:"").$tz.$q
+    } else {$1.$2};
+}
+
+while (<>) {
+    s/([0-9]+)([0-9]{3})/epoch_date_time($1,$2)/eg;
+    s/([0-9]+)/epoch_date_time($1)/eg;
+    print $_
+}
+
+
+# TODO add range eval
+# GIT ADD
+# SO
