@@ -32,3 +32,7 @@ Examples run in 2019 in London (+1 timezone):
 
          echo 1434567890 | ./epoch2iso -y20
          2015-06-17T20:04:50+01
+
+         echo '{"my_doc_in": "json", "made-at": 1434567890}' | ./epoch2iso -q
+         {"my_doc_in": "json", "made-at": "2015-06-17T20:04:50+01"}
+

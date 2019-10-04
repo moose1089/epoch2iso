@@ -61,7 +61,3 @@ while (<>) {
     print $_
 }
 
-
-# TODO add range eval
-# GIT ADD
-# SO
