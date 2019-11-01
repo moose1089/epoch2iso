@@ -43,10 +43,15 @@ if ($q==1) {$q='"'}
 
 sub epoch_date_time
 {
-    $diff_to_now= (gmtime() - $f->($1))->years;
-    if (abs($diff_to_now) < $y) {
-        $q.$f->($1)->datetime.($2?".".$2:"").$tz.$q
-    } else {$1.$2};
+    if ($1 > 10000000000000)
+    {$1.$2}
+    else {
+        $diff_to_now= (gmtime() - $f->($1))->years;
+        if (abs($diff_to_now) < $y) {
+            $q.$f->($1)->datetime.($2?".".$2:"").$tz.$q
+        } else {
+            $1.$2}
+    };
 }
 
 while (<>) {
