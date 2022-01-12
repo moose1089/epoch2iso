@@ -33,9 +33,6 @@ if ($h) {
 if ($u) {$f=\&gmtime;}
 else {$f=\&localtime;}
 
-$offset=($f->()->tzoffset/3600);
-$tz=($offset==0?"Z":sprintf("%+03d",$offset));
-
 if ($y) {}
 else {$y=10;}
 
@@ -46,9 +43,11 @@ sub epoch_date_time
     if ($1 > 10000000000000)
     {$1.$2}
     else {
+        $timeobj=$f->($1);
         $diff_to_now= (gmtime() - $f->($1))->years;
         if (abs($diff_to_now) < $y) {
-            $q.$f->($1)->datetime.($2?".".$2:"").$tz.$q
+            $tz=($timeobj->tzoffset==0?"Z":sprintf("%+03d",$timeobj->tzoffset/3600));
+            $q.$timeobj->datetime.($2?".".$2:"").$tz.$q
         } else {
             $1.$2}
     };
