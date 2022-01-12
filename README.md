@@ -36,3 +36,12 @@ Examples run in 2019 in London (+1 timezone):
          echo '{"my_doc_in": "json", "made-at": 1434567890}' | ./epoch2iso -q
          {"my_doc_in": "json", "made-at": "2015-06-17T20:04:50+01"}
 
+
+Note that the default is to display the reference date in the local timezone in effect at time of the date being converted, not the current time. 
+
+e.g. In London the following is observed even if run in winter as the time converted is using summer time. 
+
+```
+echo 1620604809 | ./epoch2iso 
+2021-05-10T01:00:09+01
+```
